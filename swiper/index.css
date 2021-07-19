@@ -1,0 +1,68 @@
+.my-swiper ul,
+.my-swiper li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.my-swiper {
+  position: relative;
+  overflow: hidden;
+}
+.my-swiper.my-swiper-animate .my-swiper-content {
+  position: absolute;
+}
+.my-swiper.my-swiper-fade .my-swiper-content {
+  position: absolute;
+}
+.my-swiper.my-swiper-fade .my-swiper-content li {
+  position: absolute;
+}
+.my-swiper.my-swiper-animate .my-swiper-content li {
+  float: left;
+}
+.my-swiper .my-swiper-content::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.my-swiper .my-swiper-btn {
+  width: 25px;
+  height: 35px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  background-color: rgba(0, 0, 0, 0.15);
+  text-align: center;
+  color: #fff;
+  line-height: 35px;
+  cursor: pointer;
+}
+.my-swiper .my-swiper-btn.my-swiper-lbtn {
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+}
+.my-swiper .my-swiper-btn.my-swiper-rbtn {
+  right: 0;
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+}
+.my-swiper .my-swiper-stops {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 20px;
+}
+.my-swiper .my-swiper-stops .my-swiper-stop {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: rgba(0, 0, 0, 0.16);
+  margin: 0 3px;
+  cursor: pointer;
+}
+.my-swiper .my-swiper-stops .my-swiper-stop.spot-active {
+  background-color: #fff;
+}

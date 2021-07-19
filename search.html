@@ -1,0 +1,149 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-06-05 18:48:29
+ * @LastEditTime: 2021-06-09 11:08:56
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \课程练习\阶段性项目\jQuery京东\search.html
+-->
+<link rel="stylesheet" href="./css/serch.css">
+<div class="head-content">
+    <div class="logo">
+        <img src="https://img10.360buyimg.com/img/jfs/t1/179086/40/4900/81664/60a47d6bE2bf6455e/208f5820c156d4ab.gif"
+            alt="">
+    </div>
+    <div class="search-box clearfix">
+        <!-- 搜索区域 -->
+        <div class="search-form clearfix">
+            <input type="text" id="search-text" placeholder="进口超市">
+            <a href="#" class="search-btn"><span class="photo-search-btn iconfont">&#xe61d;</span></a>
+            <button id="search-btn" class="iconfont">&#xe60c;</button>
+            <ul class="search-content">
+                <!-- <li>dsghksdln</li> -->
+            </ul>
+        </div>
+        <!-- 购物车 -->
+        <div id="settleup" class="dropdown" clstag="h|keycount|head|cart_null">
+            <div class="cw-icon">
+                <i class="iconfont">&#xe618;</i>
+                <a target="_blank" href="//cart.jd.com/cart.action">我的购物车</a>
+                <i class="ci-count" id="shopping-amount">0</i>
+            </div>
+
+        </div>
+        <!-- 热门关键词 -->
+        <div class="hotwords clearfix"></div>
+        <!-- 秒杀区域 -->
+        <ul class="navitem clearfix">
+            <li>
+                <a class="navitems-lk fore">秒杀 </a>
+            </li>
+            <li>
+                <a class="navitems-lk fore">优惠券 </a>
+            </li>
+            <li>
+                <a class="navitems-lk">PLUS会员 </a>
+            </li>
+            <li>
+                <a class="navitems-lk">品牌闪购 </a>
+            </li>
+            <li>
+                <a class="navitems-lk">拍卖 </a>
+            </li>
+            <li>
+                <a class="navitems-lk">京东家电 </a>
+            </li>
+            <li>
+                <a class="navitems-lk">京东超市 </a>
+            </li>
+            <li>
+                <a class="navitems-lk">京东生鲜 </a>
+            </li>
+            <li>
+                <a class="navitems-lk">京东国际 </a>
+            </li>
+            <li clstag="h|keycount|head|navi_10" class="fore10">
+                <a class="navitems-lk" target="_blank"
+                    href="https://www.jdcloud.com/cn/activity/618?utm_source=MO_jd618&amp;utm_medium=banner&amp;utm_campaign=ggw&amp;utm_term=NA"
+                    aria-lable="京东云">京东云 </a>
+            </li>
+        </ul>
+        <!-- 广告 -->
+        <div id="treasure"><a id="J_promo_lk" class="promo_lk"
+                href="//pro.jd.com/mall/active/2S7ULD94H4vvkQc8qhZxBi4sHXw1/index.html?babelChannel=ttt4"
+                target="_blank" clstag="h|keycount|head|adbtn_01" aria-label="推广位"
+                style="background-image: url(&quot;//img11.360buyimg.com/babel/jfs/t1/191655/20/6851/32054/60bd8c5dEcd71339d/1fdad2ccdac21a6f.png.webp&quot;); background-size: cover;"></a>
+        </div>
+    </div>
+</div>
+
+<script>
+    var searchTimeAjax = null;
+    // 搜索数据时候获取下拉数据
+    $("#search-text").on("input", function (e) {
+        var val = $(this).val();
+        clearTimeout(searchTimeAjax)
+        if (val) {
+            // 防抖处理
+            searchTimeAjax = setTimeout(function () {
+                $.ajax({
+                    url: "https://suggest.taobao.com/sug?",
+                    type: "get",
+                    dataType: "jsonp",
+                    data: {
+                        code: "utf-8",
+                        q: val,
+                        callback: "dealData"
+                    }
+                })
+            }, 500)
+        }
+    }).click(function () {
+        $(this).trigger("input")
+    })
+    // 搜索结果处理函数
+    function dealData(data) {
+        console.log(data)
+        data = data.result;
+        var str = "";
+        data.forEach(function (item) {
+            str += `<li>
+                ${item[0]}
+                <span class = "products-num">约${parseInt(item[1])}个商品</span>
+                </li>`
+        })
+        $(".search-content").html(str).show()
+    }
+    //鼠标移除隐藏下拉框
+    $(".search-form").mouseleave(function () {
+        $(".search-content").hide()
+    })
+    // 热门关键词
+    $.ajax({
+        url: "/hotwords",
+        type: "get",
+        dataType: "json",
+        success: function (res) {
+            renderHotwords(res.result)
+        }
+    })
+    // 渲染热门关键词
+    function renderHotwords(data) {
+        // 创建a标签的新方法,reduce是一个累加器,接受两个个参数,第一个参数是上次的值,第二个是当前值,第三个索引
+        var str = data.reduce(function (prev, item, index) {
+            return prev + `<a href = "${item.href}"  class="${index === 0 ? 'red' : ''}">${item.word}</a>`
+        }, "")
+        $(".hotwords").html(str)
+    }
+    // 热门搜索首个间隔一秒切换
+    setInterval(function () {
+        $.ajax({
+            url: "/recommendWord",
+            type: "get",
+            dataType: "json",
+            success: function (res) {
+                $(".hotwords a.red").text(res.text)
+            }
+        })
+    }, 1000)
+</script>

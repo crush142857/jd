@@ -1,0 +1,60 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: #f4f4f4;
+  font-size: 12px;
+  color: #666;
+}
+a {
+  color: #666;
+  text-decoration: none;
+}
+
+@font-face {
+  font-family: "iconfont"; /* Project id 2592762 */
+  src: url("http://at.alicdn.com/t/font_2592762_13q3r8ht6fp.woff2?t=1623040703011")
+      format("woff2"),
+    url("http://at.alicdn.com/t/font_2592762_13q3r8ht6fp.woff?t=1623040703011")
+      format("woff"),
+    url("http://at.alicdn.com/t/font_2592762_13q3r8ht6fp.ttf?t=1623040703011")
+      format("truetype");
+}
+.iconfont {
+  font-family: "iconfont";
+  font-style: normal;
+}
+.w {
+  width: 1190px;
+  margin: 0 auto;
+}
+#shortcut {
+  height: 30px;
+  border-bottom: 1px solid #ddd;
+  background-color: #e3e4e5;
+}
+#header {
+  height: 140px;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+}
+#fs {
+  height: 480px;
+  position: relative;
+}
+#J_seckill {
+  height: 260px;
+  margin-top: 20px;
+}
+.jd_fs_bg {
+  position: absolute;
+  width: 100%;
+  height: 710px;
+  left: 0px;
+  top: 0px;
+  margin: 0px;
+  background: url(https://img30.360buyimg.com/babel/jfs/t1/183855/32/7777/107228/60bdb993E0ec207aa/3d68e3649f0a0913.png.webp)
+    50% 0 no-repeat;
+  z-index: -1;
+}
